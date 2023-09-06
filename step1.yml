@@ -6,6 +6,11 @@
     git_repo_url: https://github.com/Lakan-Ilaw/car-api-project.git
     project_directory: /home/labsuser/TEST_FOLDER/Test1/
   tasks:
+    - name: Verify Maven
+      apt:
+        name: maven
+        update_cache: true
+  tasks:
     - name: Check if the project directory exists
       stat:
         path: "{{ project_directory }}"
