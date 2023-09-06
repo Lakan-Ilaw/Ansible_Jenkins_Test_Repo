@@ -30,4 +30,13 @@
         - test
         - pmd:pmd
         - verify
-        - clean install
+        - clean
+        - install
+        
+    - name: Display Error Message
+      debug:
+        msg: "An error has been found on {{ item.item }} step."
+      loop: "{{ maven_result.results }}"
+      loop_control:
+        loop_var: item
+      when: item.rc != 0
