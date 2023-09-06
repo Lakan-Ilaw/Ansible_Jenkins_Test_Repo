@@ -1,6 +1,7 @@
 ---
 - name: Run Maven Build
   hosts: localhost
+  become: yes
   vars:
     git_repo_url: https://github.com/Lakan-Ilaw/car-api-project.git
     project_directory: /home/labsuser/TEST_FOLDER/Test1/
