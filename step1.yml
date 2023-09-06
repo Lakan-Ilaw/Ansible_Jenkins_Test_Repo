@@ -3,8 +3,8 @@
   hosts: master
   become: yes
   vars:
-    git_repo_url: https://github.com/Lakan-Ilaw/car-api-project.git
-    project_directory: /home/labsuser/TEST_FOLDER/Test1/
+    git_repo_url: https://github.com/Lakan-Ilaw/java-tomcat-sample.git
+    project_directory: /home/labsuser/TEST_FOLDER/Test2/
   tasks:
     - name: Verify Maven
       apt:
