@@ -1,0 +1,36 @@
+---
+- name: Run Maven Build
+  hosts: localhost
+  vars:
+    git_repo_url: https://github.com/Lakan-Ilaw/car-api-project.git
+    project_directory: /home/labsuser/trial_path_ansible_jenkins/
+  tasks:
+    - name: Check if the project directory exists
+      stat:
+        path: "{{ project_directory }}"
+      register: project_dir
+
+    - name: Clone the Git repository
+      git:
+        repo: "{{ git_repo_url }}"
+        dest: "{{ project_directory }}"
+      when: project_dir.stat.exists == False
+
+    - name: Run Maven Goals
+      command: mvn "{{ item }}"
+      args:
+        chdir: "{{ project_directory }}"
+      loop:
+        - test
+        - pmd:pmd
+        - verify
+        - clean install
+      register: maven_result
+
+    - name: Display Error Message
+      debug:
+        msg: "An error has been found on {{ item.item }} step."
+      loop: "{{ maven_result.results }}"
+      loop_control:
+        loop_var: item
+      when: item.rc != 0
