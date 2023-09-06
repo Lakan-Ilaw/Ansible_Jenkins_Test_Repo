@@ -5,11 +5,13 @@
   vars:
     git_repo_url: https://github.com/Lakan-Ilaw/java-tomcat-sample.git
     project_directory: /home/labsuser/TEST_FOLDER/Test2/
+    
   tasks:
     - name: Verify Maven
       apt:
         name: maven
         update_cache: true
+        
   tasks:
     - name: Check if the project directory exists
       stat:
@@ -32,6 +34,7 @@
         - verify
         - clean
         - install
+      register: maven_result
         
     - name: Display Error Message
       debug:
