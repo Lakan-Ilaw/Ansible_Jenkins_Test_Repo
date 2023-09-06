@@ -1,6 +1,6 @@
 ---
 - name: Run Maven Build
-  hosts: localhost
+  hosts: master
   become: yes
   vars:
     git_repo_url: https://github.com/Lakan-Ilaw/car-api-project.git
