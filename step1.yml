@@ -4,7 +4,7 @@
   become: yes
   vars:
     git_repo_url: https://github.com/Lakan-Ilaw/car-api-project.git
-    project_directory: /home/labsuser/TEST_FOLDER/Test2/
+    project_directory: /home/labsuser/TEST_FOLDER/Deploy/
     
   tasks:
     - name: Verify Maven
@@ -12,17 +12,21 @@
         name: maven
         update_cache: true
         
-  tasks:
     - name: Check if the project directory exists
       stat:
         path: "{{ project_directory }}"
       register: project_dir
+      
+    - name: Zip the project directory with a timestamp
+      archive:
+        path: "{{ project_directory }}"
+        dest: "/tmp/project_{{ ansible_date_time.epoch }}.zip"
+      when: project_dir.stat.exists
 
     - name: Clone the Git repository
       git:
         repo: "{{ git_repo_url }}"
         dest: "{{ project_directory }}"
-      when: project_dir.stat.exists == False
 
     - name: Run Maven Goals
       command: mvn "{{ item }}"
